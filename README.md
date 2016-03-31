@@ -79,7 +79,8 @@ Approach
 ```sh
 oc new-app -e MONGODB_USER=mongouser,MONGODB_PASSWORD=password,\
 MONGODB_DATABASE=userdb,MONGODB_ADMIN_PASSWORD=password \
-  registry.access.redhat.com/rhscl/mongodb-26-rhel7 --name mongodb -l microservice=userregsvc
+  registry.access.redhat.com/rhscl/mongodb-26-rhel7 \
+--name mongodb -l microservice=userregsvc
 ```   
 
 ###### Create the User Registration Service and expose the service so that we can use a URL to make calls to the REST APIs exposed by this service
@@ -88,7 +89,8 @@ oc new-app -e EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080,\
 MONGODB_DATABASE=userdb,MONGODB_PASSWORD=password,\
 MONGODB_USER=mongouser,DATABASE_SERVICE_NAME=mongodb \
 --context-dir='nodejs-users-api' \
-https://github.com/debianmaster/microservices-on-openshift.git --name='userregsvc' -l microservice=userregsvc
+https://github.com/debianmaster/microservices-on-openshift.git \
+--name='userregsvc' -l microservice=userregsvc
 
 oc expose svc/userregsvc
 ```
@@ -102,7 +104,9 @@ oc new-app \
 https://github.com/debianmaster/microservices-on-openshift-v3.git \
 --context-dir='java-twitter-feed-api' \
 --image-stream='openshift/jboss-webserver30-tomcat8-openshift:1.2'  \
---name='twitter-api'
+--name='twitter-api' -l microservice=twittersvc
+
+oc expose svc/twitter-api
 ```
 
 
