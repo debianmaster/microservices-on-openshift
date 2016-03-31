@@ -123,8 +123,8 @@ This microservice produces html+javascript to run in a browser and makes ajax ca
 Note that we are setting an environment variable for userregsvc to access the backend using REST APIs.
 
 ```sh
-$ oc new-app -e USER_REG_SVC="userregsvc-$OSE_PROJECT.$OSE_DOMAIN" \
--e TWITTER_FEED_SVC="twitter-api-$OSE_PROJECT.$OSE_DOMAIN" \
+$ oc new-app -e USER_REG_SVC="http://userregsvc-$OSE_PROJECT.$OSE_DOMAIN" \
+-e TWITTER_FEED_SVC="http://twitter-api-$OSE_PROJECT.$OSE_DOMAIN" \
 --context-dir='php-ui' \
 https://github.com/debianmaster/microservices-on-openshift-v3.git \
 --name='userreg' \
