@@ -80,10 +80,11 @@ Approach
 
 ###### Create a MongoDB database
 ```sh
-oc new-app -e MONGODB_USER=mongouser,MONGODB_PASSWORD=password,\
+$ oc new-app -e MONGODB_USER=mongouser,MONGODB_PASSWORD=password,\
 MONGODB_DATABASE=userdb,MONGODB_ADMIN_PASSWORD=password \
   registry.access.redhat.com/rhscl/mongodb-26-rhel7 \
 --name mongodb -l microservice=userregsvc
+$ oc deploy mongodb --latest
 ```   
 
 ###### Create the User Registration Service and expose the service so that we can use a URL to make calls to the REST APIs exposed by this service
@@ -118,10 +119,14 @@ This microservice produces html+javascript to run in a browser and makes ajax ca
 Note that we are setting an environment variable for userregsvc to access the backend using REST APIs.
 
 ```sh
-oc new-app -e APPLICATION_DOMAIN="$OSE_PROJECT.$OSE_DOMAIN" \
---context-dir='php-ui' https://github.com/debianmaster/microservices-on-openshift.git --name='userreg' -l microservice=userreg
+$ oc new-app -e USER_REG_SVC="userregsvc-$OSE_PROJECT.$OSE_DOMAIN" \
+-e TWITTER_FEED_SVC="twitter-api-$OSE_PROJECT.$OSE_DOMAIN" \
+--context-dir='php-ui' \
+https://github.com/debianmaster/microservices-on-openshift.git \
+--name='userreg' \
+-l microservice=userreg
 
-oc expose svc/userreg
+$ oc expose svc/userreg
 ```
 The service exposed in the above step is our application front end. You can find the URL by running ```oc get route```
 
