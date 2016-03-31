@@ -66,7 +66,7 @@ MYSQL_USER='app_user',\
 MYSQL_PASSWORD='password',\
 MYSQL_DATABASE='microservices',\
 MYSQL_SERVICE_HOST='MYSQL'\
-  https://github.com/debianmaster/microservices-on-openshift.git \
+  https://github.com/debianmaster/microservices-on-openshift-v3.git \
   --name=emailsvc --image-stream='python:2.7'  -l microservice=emailsvc
 ```
 
@@ -94,7 +94,7 @@ oc new-app -e EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080,\
 MONGODB_DATABASE=userdb,MONGODB_PASSWORD=password,\
 MONGODB_USER=mongouser,DATABASE_SERVICE_NAME=mongodb \
 --context-dir='nodejs-users-api' \
-https://github.com/debianmaster/microservices-on-openshift.git \
+https://github.com/debianmaster/microservices-on-openshift-v3.git \
 --name='userregsvc' -l microservice=userregsvc
 
 oc expose svc/userregsvc
@@ -126,7 +126,7 @@ Note that we are setting an environment variable for userregsvc to access the ba
 $ oc new-app -e USER_REG_SVC="userregsvc-$OSE_PROJECT.$OSE_DOMAIN" \
 -e TWITTER_FEED_SVC="twitter-api-$OSE_PROJECT.$OSE_DOMAIN" \
 --context-dir='php-ui' \
-https://github.com/debianmaster/microservices-on-openshift.git \
+https://github.com/debianmaster/microservices-on-openshift-v3.git \
 --name='userreg' \
 -l microservice=userreg
 
