@@ -47,7 +47,7 @@ app.get('/setup', function(req, res) {
 
 
 app.get('/', function(req, res) {
-	res.send('Hello! The API is at http://localhost:' + port + '/api');
+	res.send('API Works!');
 });
 
 var apiRoutes = express.Router(); 
@@ -141,13 +141,14 @@ app.post('/users', function(req, res) {
 		}
 		console.log('data',data);
 		client.post('/email/', data, function(err, response, body) {
-  			res.json({ success: true });
+  			console.log('email sent!');	
 		});
 	});
+	res.json({ success: true });
 });
 
 apiRoutes.get('/users', function(req, res) {
-	User.find({},{username:1,email:1}, function(err, users) {
+	User.find({},{username:1,email:1,twitterId:1}, function(err, users) {
 		res.json(users);
 	});
 });
