@@ -25,15 +25,19 @@ Ex:--
 `$ export OSE_PROJECT=msdev`  
 
 ## 1. Create the Email Micro Service
+> Python application  
 The below command creates a new application for email service. This code is written in Python and emails are archived in mysql. This service receives the email request and sends out the email.
 
 ###### Create mysql backend   
 
 ```sh
-oc new-app -e MYSQL_USER='app_user',\
+$ oc new-app -e MYSQL_USER='app_user',\
 MYSQL_PASSWORD='password',\
 MYSQL_DATABASE=microservices\
  registry.access.redhat.com/openshift3/mysql-55-rhel7 --name='mysql'
+
+$ oc deploy mysql --latest
+ 
 ```
 > Get into the mysql pod   
 
@@ -53,7 +57,7 @@ $ exit  # to exit from mysql prompt
 $ exit  # to exit from pod
 ```
 
-###### Create email service  
+###### Create email service
 
 ```sh
 oc new-app --context-dir='python-email-api' \
@@ -62,63 +66,71 @@ MYSQL_USER='app_user',\
 MYSQL_PASSWORD='password',\
 MYSQL_DATABASE='microservices',\
 MYSQL_SERVICE_HOST='MYSQL'\
-  https://github.com/debianmaster/microservices-on-openshift.git \
+  https://github.com/debianmaster/microservices-on-openshift-v3.git \
   --name=emailsvc --image-stream='python:2.7'  -l microservice=emailsvc
 ```
 
-Although we can expose this service using a URL, if we want this email service to be used by other applications over http using the command ``oc expose svc/python-email-api``, we are not doing it here as we intend to use this as an internal service. You will see in the next section that the User Registration service will use the internal service name ```emailsvc``` to send emails.
+Although we can expose this service using a URL, if we want this email service to be used by other applications over http using the command ``oc expose svc/emailsvc``, we are not doing it here as we intend to use this as an internal service. You will see in the next section that the User Registration service will use the internal service name ```emailsvc``` to send emails.
 
-## 2. Creating User Registration Backend Micro Service
+## 2. Creating User Registration Backend Micro Service (nodejs application)
 This service contains two components. It has a database that saves the user data for which we are using MongoDB. It has business logic layer that exposes REST APIs to register a user, get userslist etc. This part of the application is written in NodeJS. We can deploy this microservice using one of the following two approaches. 
 
-Approach 1<br>
-1. Create a MongoDB database and expose it as an internal service<br>
-2. Create a User Registration Service that talks to the database deployed in the previous step. We are going to name this as "userregsvc".<br>
+Approach   
+1. Create a MongoDB database and expose it as an internal service   
+2. Create a User Registration Service that talks to the database deployed in the previous step. We are going to name this as "userregsvc".   
 
-Approach 2
-If you want to create the whole microservice together we have provided a template that can be used to deploy the above two in a single step.
-
-### Using Approach 1
-1. Create a MongoDB database
+###### Create a MongoDB database
 ```sh
-oc new-app -e MONGODB_USER=mongouser,MONGODB_PASSWORD=password,\
+$ oc new-app -e MONGODB_USER=mongouser,MONGODB_PASSWORD=password,\
 MONGODB_DATABASE=userdb,MONGODB_ADMIN_PASSWORD=password \
-  registry.access.redhat.com/rhscl/mongodb-26-rhel7 --name mongodb -l microservice=userregsvc
-  
+  registry.access.redhat.com/rhscl/mongodb-26-rhel7 \
+--name mongodb -l microservice=userregsvc
+$ oc deploy mongodb --latest
 ```   
 
-2. Create the User Registration Service and expose the service so that we can use a URL to make calls to the REST APIs exposed by this service
+###### Create the User Registration Service and expose the service so that we can use a URL to make calls to the REST APIs exposed by this service
 ```sh
 oc new-app -e EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080,\
 MONGODB_DATABASE=userdb,MONGODB_PASSWORD=password,\
 MONGODB_USER=mongouser,DATABASE_SERVICE_NAME=mongodb \
 --context-dir='nodejs-users-api' \
-https://github.com/debianmaster/microservices-on-openshift.git --name='userregsvc' -l microservice=userregsvc
+https://github.com/debianmaster/microservices-on-openshift-v3.git \
+--name='userregsvc' -l microservice=userregsvc
 
 oc expose svc/userregsvc
 ```
 Note that we are using internal emailsvc as the EMAIL_APPLICATION_DOMAIN
 
-### Using Approach 2
 
-Download the template included at the root of this repository with name nodejs-mongodb-template. This has slight modifications to the default template/instant app supplied with OpenShift. We added APPLICATION_NAME so that you can choose the name you want and added the EMAIL_APPLICATION_DOMAIN parameter that supplies this environment variable to the User Registration service.
-
-Note: You can easily create this template after application is created using Approach 1.
+## 3. Create Twitter feeds  API microservice  
+>  (Java application)    
+This microservice is a java application which takes twitter username as input and outputs recent tweets of the user.
 
 ```sh
-oc process -f nodejs-mongodb-template.json -v APPLICATION_NAME=userregsvc,SOURCE_REPOSITORY_URL=https://github.com/debianmaster/microservices-on-openshift.git,CONTEXT_DIR=nodejs-users-api,DATABASE_SERVICE_NAME=mongodb,DATABASE_USER=mongouser,DATABASE_PASSWORD=password,DATABASE_NAME=userdb,DATABASE_ADMIN_PASSWORD=password,EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080 | oc create -f -
+oc new-app \
+https://github.com/debianmaster/microservices-on-openshift-v3.git \
+--context-dir='java-twitter-feed-api' \
+--image-stream='openshift/jboss-webserver30-tomcat8-openshift:1.2'  \
+--name='twitter-api' -l microservice=twittersvc
+
+oc expose svc/twitter-api
 ```
 
 
-## 3. Create the frontend user registration application as a separate microservice 
+## 4. Create the frontend user registration application as a separate microservice  
+>   (php application)   
 This microservice produces html+javascript to run in a browser and makes ajax calls to the backend User Registration service using REST APIs.
 Note that we are setting an environment variable for userregsvc to access the backend using REST APIs.
 
 ```sh
-oc new-app -e APPLICATION_DOMAIN="$OSE_PROJECT.$OSE_DOMAIN" \
---context-dir='php-ui' https://github.com/debianmaster/microservices-on-openshift.git --name='userreg' -l microservice=userreg
+$ oc new-app -e USER_REG_SVC="http://userregsvc-$OSE_PROJECT.$OSE_DOMAIN" \
+-e TWITTER_FEED_SVC="http://twitter-api-$OSE_PROJECT.$OSE_DOMAIN" \
+--context-dir='php-ui' \
+https://github.com/debianmaster/microservices-on-openshift-v3.git \
+--name='userreg' \
+-l microservice=userreg
 
-oc expose svc/userreg
+$ oc expose svc/userreg
 ```
 The service exposed in the above step is our application front end. You can find the URL by running ```oc get route```
 
