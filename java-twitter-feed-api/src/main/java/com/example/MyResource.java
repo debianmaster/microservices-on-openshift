@@ -64,8 +64,7 @@ public class MyResource {
         }
 
         u.setTweets(tweetsFromUser);
-
-        return Response.status(200).entity(u).build();
+        return Response.status(200).addHeader("Access-Control-Allow-Origin", "*").entity(u).build();
     }
 
 }
