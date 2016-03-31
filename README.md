@@ -99,18 +99,19 @@ oc expose svc/userregsvc
 ```
 Note that we are using internal emailsvc as the EMAIL_APPLICATION_DOMAIN
 
-### Using Approach 2
 
-Download the template included at the root of this repository with name nodejs-mongodb-template. This has slight modifications to the default template/instant app supplied with OpenShift. We added APPLICATION_NAME so that you can choose the name you want and added the EMAIL_APPLICATION_DOMAIN parameter that supplies this environment variable to the User Registration service.
-
-Note: You can easily create this template after application is created using Approach 1.
-
+## 3. Create Twitter feeds  API microservice  (Java application) 
+This microservice is a java application which takes twitter username as input and outputs recent tweets of the user.
 ```sh
-oc process -f nodejs-mongodb-template.json -v APPLICATION_NAME=userregsvc,SOURCE_REPOSITORY_URL=https://github.com/debianmaster/microservices-on-openshift.git,CONTEXT_DIR=nodejs-users-api,DATABASE_SERVICE_NAME=mongodb,DATABASE_USER=mongouser,DATABASE_PASSWORD=password,DATABASE_NAME=userdb,DATABASE_ADMIN_PASSWORD=password,EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080 | oc create -f -
+oc new-app \
+https://github.com/debianmaster/microservices-on-openshift-v3.git \
+--context-dir='java-twitter-feed-api' \
+--image-stream='openshift/jboss-webserver30-tomcat8-openshift:1.2'  \
+--name='twitter-api'
 ```
 
 
-## 3. Create the frontend user registration application as a separate microservice 
+## 4. Create the frontend user registration application as a separate microservice  (php application
 This microservice produces html+javascript to run in a browser and makes ajax calls to the backend User Registration service using REST APIs.
 Note that we are setting an environment variable for userregsvc to access the backend using REST APIs.
 
@@ -121,4 +122,3 @@ oc new-app -e APPLICATION_DOMAIN="$OSE_PROJECT.$OSE_DOMAIN" \
 oc expose svc/userreg
 ```
 The service exposed in the above step is our application front end. You can find the URL by running ```oc get route```
-
