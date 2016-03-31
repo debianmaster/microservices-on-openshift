@@ -1,0 +1,180 @@
+{
+  "kind": "Template",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "python-email-api",
+    "annotations": {
+      "description": "An example Node.js application with a MongoDB database",
+      "tags": "quickstart,nodejs,mongodb",
+      "iconClass": "icon-nodejs"
+    }
+  },
+  "labels": {
+    "template": "python-email-api"
+  },
+  "objects": [{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+      "name": "python-email-api",
+      "annotations": {
+        "description": "Exposes and load balances the application pods"
+      }
+    },
+    "spec": {
+      "ports": [{
+        "name": "web",
+        "port": 8080,
+        "targetPort": 8080
+      }],
+      "selector": {
+        "name": "python-email-api"
+      }
+    }
+  }, {
+    "kind": "Route",
+    "apiVersion": "v1",
+    "metadata": {
+      "name": "python-email-api"
+    },
+    "spec": {
+      "host": "${PYTHON_APPLICATION_DOMAIN}",
+      "to": {
+        "kind": "Service",
+        "name": "python-email-api"
+      }
+    }
+  }, {
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+      "name": "python-email-api",
+      "annotations": {
+        "description": "Keeps track of changes in the application image"
+      }
+    },
+    "spec": {
+      "dockerImageRepository": "debianmaster/python-email-api"
+    }
+  }, {
+    "kind": "DeploymentConfig",
+    "apiVersion": "v1",
+    "metadata": {
+      "name": "python-email-api"
+    },
+    "spec": {
+      "strategy": {
+        "type": "Rolling"
+      },
+      "triggers": [{
+        "type": "ConfigChange",
+        "imageChangeParams": {
+          "automatic": true
+        }
+      }],
+      "replicas": 1,
+      "selector": {
+        "app": "python-email-api",
+        "deploymentconfig": "python-email-api"
+      },
+      "template": {
+        "metadata": {
+          "name": "python-email-api",
+          "labels": {
+            "app": "python-email-api",
+            "deploymentconfig": "python-email-api"
+          }
+        },
+        "spec": {
+          "containers": [{
+            "name": "python-email-api",
+            "image": "debianmaster/python-email-api@sha256:736abc826bc71286bd6d744d78c28802ab3101df25bdf93213270238c8f6090b",
+            "ports": [{
+              "containerPort": 8080
+            }]
+          }]
+        }
+      }
+    }
+  }],
+  "parameters": [{
+    "name": "MEMORY_LIMIT",
+    "displayName": "Memory limit",
+    "description": "Maximum amount of memory the Node.js container can use",
+    "value": "512Mi"
+  }, {
+    "name": "MEMORY_MONGODB_LIMIT",
+    "displayName": "Memory limit",
+    "description": "Maximum amount of memory the MongoDB container can use",
+    "value": "512Mi"
+  }, {
+    "name": "SOURCE_REPOSITORY_URL",
+    "displayName": "Source repository URL",
+    "description": "The URL of the repository with your application source code",
+    "value": "https://github.com/debianmaster/microservices-on-openshift.git"
+  }, {
+    "name": "SOURCE_REPOSITORY_REF",
+    "displayName": "Source repository reference",
+    "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch"
+  }, {
+    "name": "NODEJS_CONTEXT_DIR",
+    "displayName": "Context directory",
+    "description": "Set this to the relative path to your project if it is not in the root of your repository",
+    "value": "nodejs-users-api"
+  }, {
+    "name": "PYTHON_CONTEXT_DIR",
+    "displayName": "Context directory",
+    "description": "Set this to the relative path to your project if it is not in the root of your repository",
+    "value": "python-email-api"
+  }, {
+    "name": "NODEJS_APPLICATION_DOMAIN",
+    "displayName": "Application hostname",
+    "description": "The exposed hostname that will route to the Node.js service, if left blank a value will be defaulted.",
+    "value": ""
+  }, {
+    "name": "PYTHON_APPLICATION_DOMAIN",
+    "displayName": "Application hostname",
+    "description": "The exposed hostname that will route to the Node.js service, if left blank a value will be defaulted.",
+    "value": ""
+  }, {
+    "name": "GITHUB_WEBHOOK_SECRET",
+    "displayName": "GitHub webhook secret",
+    "description": "A secret string used to configure the GitHub webhook",
+    "generate": "expression",
+    "from": "[a-zA-Z0-9]{40}"
+  }, {
+    "name": "GENERIC_WEBHOOK_SECRET",
+    "displayName": "Generic webhook secret",
+    "description": "A secret string used to configure the Generic webhook",
+    "generate": "expression",
+    "from": "[a-zA-Z0-9]{40}"
+  }, {
+    "name": "DATABASE_SERVICE_NAME",
+    "displayName": "Database service name",
+    "description": "Database service name",
+    "value": "mongodb"
+  }, {
+    "name": "DATABASE_USER",
+    "displayName": "MongoDB user name",
+    "description": "Username for MongoDB user that will be used for accessing the database",
+    "generate": "expression",
+    "from": "user[A-Z0-9]{3}"
+  }, {
+    "name": "DATABASE_PASSWORD",
+    "displayName": "MongoDB password",
+    "description": "Password for the MongoDB user",
+    "generate": "expression",
+    "from": "[a-zA-Z0-9]{16}"
+  }, {
+    "name": "DATABASE_NAME",
+    "displayName": "Database name",
+    "description": "Database name",
+    "value": "sampledb"
+  }, {
+    "name": "DATABASE_ADMIN_PASSWORD",
+    "displayName": "Database administrator password",
+    "description": "Password for the database admin user",
+    "generate": "expression",
+    "from": "[a-zA-Z0-9]{16}"
+  }]
+}
