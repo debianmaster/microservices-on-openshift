@@ -25,6 +25,7 @@ Ex:--
 `$ export OSE_PROJECT=msdev`  
 
 ## 1. Create the Email Micro Service
+> Python application  
 The below command creates a new application for email service. This code is written in Python and emails are archived in mysql. This service receives the email request and sends out the email.
 
 ###### Create mysql backend   
@@ -56,7 +57,7 @@ $ exit  # to exit from mysql prompt
 $ exit  # to exit from pod
 ```
 
-###### Create email service   (python application)
+###### Create email service
 
 ```sh
 oc new-app --context-dir='python-email-api' \
@@ -101,8 +102,10 @@ oc expose svc/userregsvc
 Note that we are using internal emailsvc as the EMAIL_APPLICATION_DOMAIN
 
 
-## 3. Create Twitter feeds  API microservice  (Java application) 
+## 3. Create Twitter feeds  API microservice  
+>  (Java application)    
 This microservice is a java application which takes twitter username as input and outputs recent tweets of the user.
+
 ```sh
 oc new-app \
 https://github.com/debianmaster/microservices-on-openshift-v3.git \
@@ -114,7 +117,8 @@ oc expose svc/twitter-api
 ```
 
 
-## 4. Create the frontend user registration application as a separate microservice  (php application)
+## 4. Create the frontend user registration application as a separate microservice  
+>   (php application)   
 This microservice produces html+javascript to run in a browser and makes ajax calls to the backend User Registration service using REST APIs.
 Note that we are setting an environment variable for userregsvc to access the backend using REST APIs.
 
