@@ -3,7 +3,7 @@ This repo demonstrates simple development and deployment of polyglot microservic
 2. UserRegistration: This is frontend UI built using PHP. The job of this microservice is confined to creating web pages.
 3. Email Service: This is a generic email service that receives a request and sends an email. This code is written in Python. We will also add an email log (thinking of MySQL DB).
 
-![alt tag](https://raw.githubusercontent.com/debianmaster/microservices-on-openshift/master/Arch.jpeg)
+![alt tag](https://raw.githubusercontent.com/debianmaster/microservices-on-openshift-v3/master/Arch.png)
 
 # 
 ## 0. Initial Setup
