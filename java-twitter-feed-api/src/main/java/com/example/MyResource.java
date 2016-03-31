@@ -64,7 +64,7 @@ public class MyResource {
         }
 
         u.setTweets(tweetsFromUser);
-        return Response.status(200).addHeader("Access-Control-Allow-Origin", "*").entity(u).build();
+        return Response.ok().entity(u).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").allow("OPTIONS").build();
     }
 
 }
