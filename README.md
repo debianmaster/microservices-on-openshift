@@ -71,18 +71,18 @@ Although we can expose this service using a URL, if we want this email service t
 ## 2. Creating User Registration Backend Micro Service
 This service contains two components. It has a database that saves the user data for which we are using MongoDB. It has business logic layer that exposes REST APIs to register a user, get userslist etc. This part of the application is written in NodeJS. We can deploy this microservice using one of the following two approaches. 
 
-Approach
-1. Create a MongoDB database and expose it as an internal service<br>
-2. Create a User Registration Service that talks to the database deployed in the previous step. We are going to name this as "userregsvc".<br>   
+Approach   
+1. Create a MongoDB database and expose it as an internal service   
+2. Create a User Registration Service that talks to the database deployed in the previous step. We are going to name this as "userregsvc".   
 
-##### Create a MongoDB database
+###### Create a MongoDB database
 ```sh
 oc new-app -e MONGODB_USER=mongouser,MONGODB_PASSWORD=password,\
 MONGODB_DATABASE=userdb,MONGODB_ADMIN_PASSWORD=password \
   registry.access.redhat.com/rhscl/mongodb-26-rhel7 --name mongodb -l microservice=userregsvc
 ```   
 
-##### Create the User Registration Service and expose the service so that we can use a URL to make calls to the REST APIs exposed by this service
+###### Create the User Registration Service and expose the service so that we can use a URL to make calls to the REST APIs exposed by this service
 ```sh
 oc new-app -e EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080,\
 MONGODB_DATABASE=userdb,MONGODB_PASSWORD=password,\
