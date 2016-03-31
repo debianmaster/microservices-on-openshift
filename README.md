@@ -69,7 +69,7 @@ MYSQL_SERVICE_HOST='MYSQL'\
   --name=emailsvc --image-stream='python:2.7'  -l microservice=emailsvc
 ```
 
-Although we can expose this service using a URL, if we want this email service to be used by other applications over http using the command ``oc expose svc/python-email-api``, we are not doing it here as we intend to use this as an internal service. You will see in the next section that the User Registration service will use the internal service name ```emailsvc``` to send emails.
+Although we can expose this service using a URL, if we want this email service to be used by other applications over http using the command ``oc expose svc/emailsvc``, we are not doing it here as we intend to use this as an internal service. You will see in the next section that the User Registration service will use the internal service name ```emailsvc``` to send emails.
 
 ## 2. Creating User Registration Backend Micro Service
 This service contains two components. It has a database that saves the user data for which we are using MongoDB. It has business logic layer that exposes REST APIs to register a user, get userslist etc. This part of the application is written in NodeJS. We can deploy this microservice using one of the following two approaches. 
