@@ -56,7 +56,7 @@ $ exit  # to exit from mysql prompt
 $ exit  # to exit from pod
 ```
 
-###### Create email service  
+###### Create email service   (python application)
 
 ```sh
 oc new-app --context-dir='python-email-api' \
@@ -71,7 +71,7 @@ MYSQL_SERVICE_HOST='MYSQL'\
 
 Although we can expose this service using a URL, if we want this email service to be used by other applications over http using the command ``oc expose svc/emailsvc``, we are not doing it here as we intend to use this as an internal service. You will see in the next section that the User Registration service will use the internal service name ```emailsvc``` to send emails.
 
-## 2. Creating User Registration Backend Micro Service
+## 2. Creating User Registration Backend Micro Service (nodejs application)
 This service contains two components. It has a database that saves the user data for which we are using MongoDB. It has business logic layer that exposes REST APIs to register a user, get userslist etc. This part of the application is written in NodeJS. We can deploy this microservice using one of the following two approaches. 
 
 Approach   
@@ -114,7 +114,7 @@ oc expose svc/twitter-api
 ```
 
 
-## 4. Create the frontend user registration application as a separate microservice  (php application
+## 4. Create the frontend user registration application as a separate microservice  (php application)
 This microservice produces html+javascript to run in a browser and makes ajax calls to the backend User Registration service using REST APIs.
 Note that we are setting an environment variable for userregsvc to access the backend using REST APIs.
 
