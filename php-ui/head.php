@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta name="robots" content="noindex">
 
-    <title>Login and Register</title>
+    <title>Login and Register Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="style.css" rel="stylesheet" id="bootstrap-css">
