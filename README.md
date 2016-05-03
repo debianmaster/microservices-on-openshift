@@ -134,3 +134,9 @@ $ oc expose svc/userreg
 ```
 The service exposed in the above step is our application front end. You can find the URL by running ```oc get route```
 
+
+## 5. Scaling applications
+
+```sh
+oc scale rc/userreg --replicas=3
+```
