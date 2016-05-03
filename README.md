@@ -7,10 +7,12 @@ This repo demonstrates simple development and deployment of polyglot microservic
 
 # 
 ## 0. Initial Setup
-> To setup openshift on your laptop using a Vagrant image use https://www.openshift.org/vm/  
+> To setup openshift on your laptop using a Vagrant image use https://www.openshift.org/vm/
+> Assuming you have openshift installed on https://10.2.2.2:8443
 
 Create an OpenShift project where these microservices will be created for development purposes. As an example we are calling it msdev.
 ```sh
+oc login https://10.2.2.2:8443   
 oc new-project msdev
 ```
 
