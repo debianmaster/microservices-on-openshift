@@ -3,7 +3,7 @@ This repo demonstrates simple development and deployment of polyglot microservic
 2. UserRegistration: This is frontend UI built using PHP. The job of this microservice is confined to creating web pages.   
 3. Email Service: This is a generic email service that receives a request and sends an email. This code is written in Python. We will also add an email log (thinking of MySQL DB).     
 
-![alt tag](https://raw.githubusercontent.com/debianmaster/microservices-on-openshift-v3/master/Arch.png)
+![alt tag](https://raw.githubusercontent.com/debianmaster/microservices-on-openshift/master/Arch.png)
 
 # 
 ## 0. Initial Setup
@@ -66,7 +66,7 @@ MYSQL_USER='app_user',\
 MYSQL_PASSWORD='password',\
 MYSQL_DATABASE='microservices',\
 MYSQL_SERVICE_HOST='MYSQL'\
-  https://github.com/debianmaster/microservices-on-openshift-v3.git \
+  https://github.com/debianmaster/microservices-on-openshift.git \
   --name=emailsvc --image-stream='python:2.7'  -l microservice=emailsvc
 ```
 
@@ -94,7 +94,7 @@ oc new-app -e EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080,\
 MONGODB_DATABASE=userdb,MONGODB_PASSWORD=password,\
 MONGODB_USER=mongouser,DATABASE_SERVICE_NAME=mongodb \
 --context-dir='nodejs-users-api' \
-https://github.com/debianmaster/microservices-on-openshift-v3.git \
+https://github.com/debianmaster/microservices-on-openshift.git \
 --name='userregsvc' -l microservice=userregsvc
 
 oc expose svc/userregsvc
@@ -108,7 +108,7 @@ This microservice is a java application which takes twitter username as input an
 
 ```sh
 oc new-app \
-https://github.com/debianmaster/microservices-on-openshift-v3.git \
+https://github.com/debianmaster/microservices-on-openshift.git \
 --context-dir='java-twitter-feed-api' \
 --image-stream='openshift/jboss-webserver30-tomcat8-openshift:1.2'  \
 --name='twitter-api' -l microservice=twittersvc
@@ -126,7 +126,7 @@ Note that we are setting an environment variable for userregsvc to access the ba
 $ oc new-app -e USER_REG_SVC="http://userregsvc-$OSE_PROJECT.$OSE_DOMAIN" \
 -e TWITTER_FEED_SVC="http://twitter-api-$OSE_PROJECT.$OSE_DOMAIN" \
 --context-dir='php-ui' \
-https://github.com/debianmaster/microservices-on-openshift-v3.git \
+https://github.com/debianmaster/microservices-on-openshift.git \
 --name='userreg' \
 -l microservice=userreg
 
