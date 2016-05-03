@@ -5,6 +5,9 @@ This repo demonstrates simple development and deployment of polyglot microservic
 
 ![alt tag](https://raw.githubusercontent.com/debianmaster/microservices-on-openshift/master/Arch.png)
 
+> This is how it looks at the end   
+
+
 ![alt tag](https://raw.githubusercontent.com/debianmaster/Notes/master/demogif-latest.gif)
 
 
