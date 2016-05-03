@@ -44,7 +44,7 @@ $ oc deploy mysql --latest
 
 ```sh
 $ sleep 10 # wait till the mysql is pod is created
-$ oc rsh $(oc get pods | grep mysql | awk '{print $1}')    # rsh will ssh into the mysql pod
+$ oc rsh $(oc get pods | grep mysql | grep Running | awk '{print $1}')    # rsh will ssh into the mysql pod
 $ mysql -u $MYSQL_USER -p$MYSQL_PASSWORD -h $HOSTNAME $MYSQL_DATABASE   ##inside the pod 
 ```
 >  Create schema and exit container
