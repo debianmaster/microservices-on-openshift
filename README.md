@@ -5,6 +5,9 @@ This repo demonstrates simple development and deployment of polyglot microservic
 
 ![alt tag](https://raw.githubusercontent.com/debianmaster/microservices-on-openshift/master/Arch.png)
 
+![alt tag](https://raw.githubusercontent.com/debianmaster/Notes/master/demogif-latest.gif)
+
+
 # 
 ## 0. Initial Setup
 > To setup openshift on your laptop using a Vagrant image use https://www.openshift.org/vm/
