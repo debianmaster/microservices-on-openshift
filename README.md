@@ -7,6 +7,8 @@ This repo demonstrates simple development and deployment of polyglot microservic
 
 # 
 ## 0. Initial Setup
+> To setup openshift on your laptop using a Vagrant image use https://www.openshift.org/vm/  
+
 Create an OpenShift project where these microservices will be created for development purposes. As an example we are calling it msdev.
 ```sh
 oc new-project msdev
@@ -21,7 +23,7 @@ export OSE_DOMAIN=<<your apps domain name..ex: apps.osecloud.com>
 export OSE_PROJECT=<<your openshift projectname. ex:msdev>
 ```
 Ex:--   
-`$ export OSE_DOMAIN=apps.oseworkshop.sc.osecloud.com`  
+`$ export OSE_DOMAIN=apps.10.2.2.2.xip.io`  
 `$ export OSE_PROJECT=msdev`  
 
 ## 1. Create the Email Micro Service
@@ -134,8 +136,14 @@ $ oc expose svc/userreg
 ```
 The service exposed in the above step is our application front end. You can find the URL by running ```oc get route```
 
+## 5. Verifiation and Testing
 
-## 5. Scaling applications
+> Visit http://userreg-msdev.apps.10.2.2.2.xip.io/    to see the php frontend.
+
+
+
+## 6. Scaling applications
+> To scale frontend  
 
 ```sh
 oc scale rc/userreg --replicas=3
