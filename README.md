@@ -151,8 +151,8 @@ The service exposed in the above step is our application front end. You can find
 
 
 ## 6. Scaling applications
-> To scale frontend  
+> Suppose you have a huge traffic and you want to scale front end  
 
 ```sh
-oc scale rc/userreg --replicas=3
+oc scale dc/userreg --replicas=4
 ```
