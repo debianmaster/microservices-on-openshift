@@ -144,7 +144,7 @@ $ oc expose svc/userreg
 ```
 The service exposed in the above step is our application front end. You can find the URL by running ```oc get route```
 
-## 5. Verifiation and Testing
+## 5. Verification and Testing
 
 > Visit http://userreg-msdev.apps.10.2.2.2.xip.io/    to see the php frontend.
 
