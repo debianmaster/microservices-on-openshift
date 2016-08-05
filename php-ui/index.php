@@ -4,6 +4,7 @@
  include 'head.php';
 ?>
 <body ng-app="myApp">
+    Sample Change
     <div class="container" ng-controller="appController">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
