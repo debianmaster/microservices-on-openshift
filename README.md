@@ -122,12 +122,12 @@ Note that we are using internal emailsvc as the EMAIL_APPLICATION_DOMAIN
 This microservice is a java application which takes twitter username as input and outputs recent tweets of the user.
 
 ```sh
-oc import-image --from=openshift/wildfly-81-centos7 wildfly-81-centos7 --confirm
+oc import-image --from=registry.access.redhat.com/jboss-webserver-3/webserver30-tomcat8-openshift tomcat8 --confirm
 
 oc new-app \
 https://github.com/debianmaster/microservices-on-openshift.git \
 --context-dir='java-twitter-feed-api' \
---image-stream='wildfly-81-centos7'  \
+--image-stream='tomcat8'  \
 --name='twitter-api' -l microservice=twittersvc
 
 oc expose svc/twitter-api
