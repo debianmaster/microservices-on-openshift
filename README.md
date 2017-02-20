@@ -105,7 +105,7 @@ $ oc deploy mongodb --latest
 
 ###### Create the User Registration Service and expose the service so that we can use a URL to make calls to the REST APIs exposed by this service
 ```sh
-oc new-app -e EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080\
+oc new-app -e EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080 \
 MONGODB_DATABASE=userdb MONGODB_PASSWORD=password \
 MONGODB_USER=mongouser DATABASE_SERVICE_NAME=mongodb \
 --context-dir='nodejs-users-api' \
