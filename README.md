@@ -76,10 +76,10 @@ $ exit  # to exit from pod
 
 ```sh
 oc new-app --context-dir='python-email-api' \
-  -e EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080,\
-MYSQL_USER='app_user',\
-MYSQL_PASSWORD='password',\
-MYSQL_DATABASE='microservices',\
+  -e EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080\
+MYSQL_USER='app_user'\
+MYSQL_PASSWORD='password'\
+MYSQL_DATABASE='microservices'\
 MYSQL_SERVICE_HOST='MYSQL'\
   https://github.com/debianmaster/microservices-on-openshift.git \
   --name=emailsvc --image-stream='python:2.7'  -l microservice=emailsvc
