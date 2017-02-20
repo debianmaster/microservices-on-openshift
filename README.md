@@ -96,7 +96,7 @@ Approach
 
 ###### Create a MongoDB database
 ```sh
-$ oc new-app -e MONGODB_USER=mongouser,MONGODB_PASSWORD=password\
+$ oc new-app -e MONGODB_USER=mongouser MONGODB_PASSWORD=password \
 MONGODB_DATABASE=userdb MONGODB_ADMIN_PASSWORD=password \
   registry.access.redhat.com/rhscl/mongodb-26-rhel7 \
 --name mongodb -l microservice=userregsvc
