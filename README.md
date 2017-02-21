@@ -46,9 +46,9 @@ The below command creates a new application for email service. This code is writ
 ###### Create mysql backend   
 
 ```sh
-$ oc new-app -e MYSQL_USER='app_user'\
-MYSQL_PASSWORD='password'\
-MYSQL_DATABASE=microservices\
+$ oc new-app -e MYSQL_USER='app_user' \
+MYSQL_PASSWORD='password' \
+MYSQL_DATABASE=microservices \
  registry.access.redhat.com/rhscl/mysql-56-rhel7 --name='mysql' -l microservice=emailsvc
 
 $ oc deploy mysql --latest
