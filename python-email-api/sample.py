@@ -33,12 +33,12 @@ class EmailResource(object):
                 'JSON was incorrect.')
  
         resp.status = falcon.HTTP_202
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login(os.getenv('GMAIL_USERNAME', 'node2test@gmail.com'), os.getenv('GMAIL_PASSWORD', 'Refresh@2015'))
-        msg = email_req['msg']
-        server.sendmail(os.getenv('GMAIL_USERNAME', 'node2test@gmail.com'), email_req['to'], msg)
-        server.quit()
+        #server = smtplib.SMTP('smtp.gmail.com', 587)
+        #server.starttls()
+        #server.login(os.getenv('GMAIL_USERNAME', 'node2test@gmail.com'), os.getenv('GMAIL_PASSWORD', 'Refresh@2015'))
+        #msg = email_req['msg']
+        #server.sendmail(os.getenv('GMAIL_USERNAME', 'node2test@gmail.com'), email_req['to'], msg)
+        #server.quit()
         config = {
           'user': os.getenv('MYSQL_USER', 'root'),
           'password': os.getenv('MYSQL_PASSWORD', ''),
