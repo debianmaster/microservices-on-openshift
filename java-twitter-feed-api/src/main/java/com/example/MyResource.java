@@ -37,13 +37,13 @@ public class MyResource {
 
             ConfigurationBuilder cb = new ConfigurationBuilder();
             cb.setDebugEnabled(true)
-                    .setOAuthConsumerKey("DPvTS3jiK9FA5A51FwkIFO3l7")
+                    .setOAuthConsumerKey("u31E52OeEBK540VxDPJAZLSF3")
                     .setOAuthConsumerSecret(
-                            "ss44Xy3S9lmwAQSe3kbseVmyZmpjeopIXtH7fUTqtZqDW5FICs")
+                            "NPaUvT9Q48C8MGJEHgaglWdKn6FhGRvSTumLKWiSDTAEIpWXJw")
                     .setOAuthAccessToken(
-                            "281649701-ZjJVyFrgeG1OtEOGuzmcwGCj7WzxZvlsRJVM70CV")
+                            "3068700076-4QjvtI539XMijE5hxsCBWLHrPNj2S9vSMxmNjY")
                     .setOAuthAccessTokenSecret(
-                            "XyKNiKsABTc9bMvxmIrJ0w2hsR6k3Fdu1gHdF54W2CVYu");
+                            "kzVv6cgn1xSUz9Xj9qRvcPbc6bWllATY9YLGPGSuPwHqu");
             TwitterFactory tf = new TwitterFactory(cb.build());
             Twitter twitter = tf.getInstance();
 
