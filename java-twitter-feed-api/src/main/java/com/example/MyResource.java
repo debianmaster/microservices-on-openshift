@@ -37,13 +37,13 @@ public class MyResource {
 
             ConfigurationBuilder cb = new ConfigurationBuilder();
             cb.setDebugEnabled(true)
-                    .setOAuthConsumerKey("DPvTS3jiK9FA5A51FwkIFO3l7")
+                    .setOAuthConsumerKey(System.getenv("TWITTER_CONSUMER_KEY"))
                     .setOAuthConsumerSecret(
-                            "ss44Xy3S9lmwAQSe3kbseVmyZmpjeopIXtH7fUTqtZqDW5FICs")
+                            System.getenv("TWITTER_CONSUMER_SERVICE"))
                     .setOAuthAccessToken(
-                            "281649701-ZjJVyFrgeG1OtEOGuzmcwGCj7WzxZvlsRJVM70CV")
+                            System.getenv("TWITTER_OAUTH_ACCESS_TOKEN"))
                     .setOAuthAccessTokenSecret(
-                            "XyKNiKsABTc9bMvxmIrJ0w2hsR6k3Fdu1gHdF54W2CVYu");
+                            System.getenv("TWITTER_OAUTH_ACCESS_TOKEN_SECRET"));
             TwitterFactory tf = new TwitterFactory(cb.build());
             Twitter twitter = tf.getInstance();
 
