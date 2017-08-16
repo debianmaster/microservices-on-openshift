@@ -2,7 +2,7 @@
 $dbhost = gethostbyname('mysql.msservices'); 
 $dbport = 3306;
 $dbuser = "app_user";
-$dbname = "microservices"
+$dbname = "microservices";
 $dbpwd = "password";
  
 $connection = mysqli_connect($dbhost.":".$dbport, $dbuser, $dbpwd, $dbname) or die("Error " . mysqli_error($connection));
