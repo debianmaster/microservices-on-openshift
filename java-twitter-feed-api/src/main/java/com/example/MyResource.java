@@ -41,9 +41,9 @@ public class MyResource {
                     .setOAuthConsumerSecret(
                             System.getenv("TWITTER_CONSUMER_SERVICE"))
                     .setOAuthAccessToken(
-                            System.getenv("TWITTER_OAUTH_ACCESS_TOKEN))
+                            System.getenv("TWITTER_OAUTH_ACCESS_TOKEN"))
                     .setOAuthAccessTokenSecret(
-                            "TWITTER_OAUTH_ACCESS_TOKEN_SECRET");
+                            System.getenv("TWITTER_OAUTH_ACCESS_TOKEN_SECRET"));
             TwitterFactory tf = new TwitterFactory(cb.build());
             Twitter twitter = tf.getInstance();
 
