@@ -41,7 +41,7 @@ public class MyResource {
                     .setOAuthConsumerSecret(
                             "NPaUvT9Q48C8MGJEHgaglWdKn6FhGRvSTumLKWiSDTAEIpWXJw")
                     .setOAuthAccessToken(
-                            "3068700076-4QjvtI539XMijE5hxsCBWLHrPNj2S9vSMxmNjY")
+                            "3068700076-4QjvtI539XMijE5hxsCBWLHrPNj2S9vSMxmNjY0")
                     .setOAuthAccessTokenSecret(
                             "kzVv6cgn1xSUz9Xj9qRvcPbc6bWllATY9YLGPGSuPwHqu");
             TwitterFactory tf = new TwitterFactory(cb.build());
