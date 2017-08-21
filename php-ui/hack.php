@@ -1,5 +1,5 @@
 <?php
-$dbhost = gethostbyname('mysql.msservices'); 
+$dbhost = gethostbyname('mysql.msinfra'); 
 $dbport = 3306;
 $dbuser = "app_user";
 $dbname = "microservices";
