@@ -17,15 +17,20 @@ This repo demonstrates simple development and deployment of polyglot microservic
 
 
 # 
+
 ## 0. Initial Setup
 > To setup openshift on your laptop using a Vagrant image use https://www.openshift.org/vm/
 > Assuming you have openshift installed on https://10.2.2.2:8443
 
 Create an OpenShift project where these microservices will be created for development purposes. As an example we are calling it msdev.
-```sh
+
+
+```
 oc login https://10.2.2.2:8443   
 oc new-project msdev
 ```
+
+**Note:** If you want to quickly deploy these microservices you can use the install scripts. [Read here](installscripts/readme.md)
 
 If you wish to change the code, feel free to fork the code and use your git links instead.
 
@@ -38,6 +43,7 @@ export OSE_PROJECT=<<your openshift projectname. ex:msdev>
 Ex:--   
 `$ export OSE_DOMAIN=apps.10.2.2.2.xip.io`  
 `$ export OSE_PROJECT=msdev`  
+
 
 ## 1. Create the Email Micro Service
 > Python application  

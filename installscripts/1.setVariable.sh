@@ -2,7 +2,6 @@ export OSE_DOMAIN=apps.devday.ocpcloud.com
 export OSE_CLIENT_PROJECT=msservices
 export OSE_SERVICES_PROJECT=msservices
 export OSE_INFRA_PROJECT=msservices
-export OSE_SERVICESROJECT=msclient
 export FROM_GMAIL=<<from email for your email service>>
 export FROM_GMAIL_PASSWORD=<<password for the from email>>
 //For these params refer https://dev.twitter.com/oauth/overview/application-owner-access-tokens
