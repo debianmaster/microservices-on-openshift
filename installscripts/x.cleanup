@@ -1,0 +1,6 @@
+oc delete all --all -n $OSE_CLIENT_PROJECT
+oc delete all --all -n $OSE_SERVICES_PROJECT
+oc delete all --all -n $OSE_INFRA_PROJECT
+oc delete configmap --all -n $OSE_CLIENT_PROJECT
+oc delete configmap --all -n $OSE_SERVICES_PROJECT
+oc delete configmap --all -n $OSE_INFRA_PROJECT

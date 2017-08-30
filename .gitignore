@@ -1,3 +1,4 @@
 node_modules
 node_modules/
 java-twitter-feed-api/target/
+installscripts/0.sh

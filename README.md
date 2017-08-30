@@ -8,24 +8,29 @@ This repo demonstrates simple development and deployment of polyglot microservic
 
 
 
-![alt tag](https://raw.githubusercontent.com/debianmaster/microservices-on-openshift/master/Arch.png)
+![alt tag](https://raw.githubusercontent.com/veermuchandi/microservices-on-openshift/master/Arch.png)
 
 > This is how it looks at the end   
 
 
-![alt tag](https://raw.githubusercontent.com/debianmaster/Notes/master/demogif-latest.gif)
+![alt tag](https://raw.githubusercontent.com/veermuchandi/Notes/master/demogif-latest.gif)
 
 
 # 
+
 ## 0. Initial Setup
 > To setup openshift on your laptop using a Vagrant image use https://www.openshift.org/vm/
 > Assuming you have openshift installed on https://10.2.2.2:8443
 
 Create an OpenShift project where these microservices will be created for development purposes. As an example we are calling it msdev.
-```sh
+
+
+```
 oc login https://10.2.2.2:8443   
 oc new-project msdev
 ```
+
+**Note:** If you want to quickly deploy these microservices you can use the install scripts. [Read here](installscripts/readme.md)
 
 If you wish to change the code, feel free to fork the code and use your git links instead.
 
@@ -38,6 +43,7 @@ export OSE_PROJECT=<<your openshift projectname. ex:msdev>
 Ex:--   
 `$ export OSE_DOMAIN=apps.10.2.2.2.xip.io`  
 `$ export OSE_PROJECT=msdev`  
+
 
 ## 1. Create the Email Micro Service
 > Python application  
@@ -82,7 +88,7 @@ MYSQL_USER='app_user'\
 MYSQL_PASSWORD='password'\
 MYSQL_DATABASE='microservices'\
 MYSQL_SERVICE_HOST='MYSQL'\
-  https://github.com/debianmaster/microservices-on-openshift.git \
+  https://github.com/veermuchandi/microservices-on-openshift.git \
   --name=emailsvc --image-stream='python:2.7'  -l microservice=emailsvc
 ```
 
@@ -110,7 +116,7 @@ oc new-app -e EMAIL_APPLICATION_DOMAIN=http://emailsvc:8080 \
 MONGODB_DATABASE=userdb MONGODB_PASSWORD=password \
 MONGODB_USER=mongouser DATABASE_SERVICE_NAME=mongodb \
 --context-dir='nodejs-users-api' \
-https://github.com/debianmaster/microservices-on-openshift.git \
+https://github.com/veermuchandi/microservices-on-openshift.git \
 --name='userregsvc' -l microservice=userregsvc
 
 oc expose svc/userregsvc
@@ -126,7 +132,7 @@ This microservice is a java application which takes twitter username as input an
 oc import-image --from=registry.access.redhat.com/jboss-webserver-3/webserver30-tomcat8-openshift tomcat8 --confirm
 
 oc new-app \
-https://github.com/debianmaster/microservices-on-openshift.git \
+https://github.com/veermuchandi/microservices-on-openshift.git \
 --context-dir='java-twitter-feed-api' \
 --image-stream='tomcat8'  \
 --name='twitter-api' -l microservice=twittersvc
@@ -144,7 +150,7 @@ Note that we are setting an environment variable for userregsvc to access the ba
 $ oc new-app -e USER_REG_SVC="http://userregsvc-$OSE_PROJECT.$OSE_DOMAIN" \
 -e TWITTER_FEED_SVC="http://twitter-api-$OSE_PROJECT.$OSE_DOMAIN" \
 --context-dir='php-ui' \
-https://github.com/debianmaster/microservices-on-openshift.git \
+https://github.com/veermuchandi/microservices-on-openshift.git \
 --name='userreg' \
 -l microservice=userreg
 
