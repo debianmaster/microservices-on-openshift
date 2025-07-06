@@ -140,8 +140,36 @@ https://github.com/veermuchandi/microservices-on-openshift.git \
 oc expose svc/twitter-api
 ```
 
+## 4. Create the Products API Microservice
+> (Golang application)
+This microservice is a Golang REST API that manages product data with full CRUD operations. It provides endpoints for creating, reading, updating, and deleting products, and integrates with other microservices in the architecture.
 
-## 4. Create the frontend user registration application as a separate microservice  
+The Products API exposes the following REST endpoints:
+- `GET /api/products` - List all products
+- `POST /api/products` - Create a new product  
+- `GET /api/products/:id` - Get product by ID
+- `PUT /api/products/:id` - Update product by ID
+- `DELETE /api/products/:id` - Delete product by ID
+- `GET /` - Health check endpoint
+
+```sh
+oc new-app -e EMAIL_SERVICE_URL="http://emailsvc-$OSE_PROJECT.$OSE_DOMAIN:8080" \
+USER_SERVICE_URL="http://userregsvc-$OSE_PROJECT.$OSE_DOMAIN:8080" \
+--context-dir='golang-products-api' \
+https://github.com/veermuchandi/microservices-on-openshift.git \
+--name='products-api' -l microservice=productssvc
+
+oc expose svc/products-api
+```
+
+The service is configured with environment variables to communicate with other microservices:
+- `EMAIL_SERVICE_URL` - Points to the Python email service for sending notifications
+- `USER_SERVICE_URL` - Points to the Node.js user registration service for user validation
+
+The Products API runs on port 8080 (like other microservices) and includes CORS support for frontend integration. It uses in-memory storage with sample products for demonstration purposes.
+
+
+## 5. Create the frontend user registration application as a separate microservice  
 >   (php application)   
 This microservice produces html+javascript to run in a browser and makes ajax calls to the backend User Registration service using REST APIs.
 Note that we are setting an environment variable for userregsvc to access the backend using REST APIs.
@@ -158,15 +186,16 @@ $ oc expose svc/userreg
 ```
 The service exposed in the above step is our application front end. You can find the URL by running ```oc get route```
 
-## 5. Verification and Testing
+## 6. Verification and Testing
 
 > Visit http://userreg-msdev.apps.10.2.2.2.xip.io/    to see the php frontend.
 
 
 
-## 6. Scaling applications
+## 7. Scaling applications
 > Suppose you have a huge traffic and you want to scale front end  
 
 ```sh
 oc scale dc/userreg --replicas=4
 ```
+
